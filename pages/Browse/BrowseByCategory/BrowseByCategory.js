@@ -80,6 +80,6 @@ const styles = StyleSheet.create({
   },
   spacer: {
     width: '100%',
-    height: 32,
+    height: 16,
   },
 });

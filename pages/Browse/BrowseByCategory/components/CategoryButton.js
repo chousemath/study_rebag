@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         height: 60,
     },
     text: {
-        fontSize: 32,
+        fontSize: 28,
     },
     textContainer: {
         display: 'flex',

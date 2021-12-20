@@ -6,12 +6,21 @@ const Stack = createNativeStackNavigator();
 
 export default function Browse() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false
-      }}>
-      <Stack.Screen name="BrowseByCategory" component={BrowseByCategory} />
-      <Stack.Screen name="ProductListing" component={ProductListing} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="BrowseByCategory"
+        component={BrowseByCategory}
+        options={{
+          title: 'Browse By Category'
+        }}
+      />
+      <Stack.Screen
+        name="ProductListing"
+        component={ProductListing}
+        options={{
+          title: 'Product Listing'
+        }}
+      />
     </Stack.Navigator>
   );
 }
