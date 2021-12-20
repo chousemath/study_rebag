@@ -1,11 +1,11 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-export default function CategoryButton({ name, category }) {
+export default function CategoryButton({ name, navigate }) {
     return (
         <View style={styles.outerContainer}>
-            <View style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={navigate}>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>{name}</Text>
                 </View>
@@ -13,7 +13,7 @@ export default function CategoryButton({ name, category }) {
                 <View style={styles.iconContainer}>
                     <AntDesign name="right" color={'gray'} size={24} />
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 }
