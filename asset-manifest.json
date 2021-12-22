@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/study_rebag/static/js/app.fa3d8f8b.chunk.js",
-    "app.js.map": "/study_rebag/static/js/app.fa3d8f8b.chunk.js.map",
+    "app.js": "/study_rebag/static/js/app.d2681c8f.chunk.js",
+    "app.js.map": "/study_rebag/static/js/app.d2681c8f.chunk.js.map",
     "runtime~app.js": "/study_rebag/static/js/runtime~app.958a4c97.js",
     "runtime~app.js.map": "/study_rebag/static/js/runtime~app.958a4c97.js.map",
-    "static/js/2.06842561.chunk.js": "/study_rebag/static/js/2.06842561.chunk.js",
-    "static/js/2.06842561.chunk.js.map": "/study_rebag/static/js/2.06842561.chunk.js.map",
+    "static/js/2.20d99aef.chunk.js": "/study_rebag/static/js/2.20d99aef.chunk.js",
+    "static/js/2.20d99aef.chunk.js.map": "/study_rebag/static/js/2.20d99aef.chunk.js.map",
     "fonts/AntDesign.ttf": "/study_rebag/./fonts/AntDesign.ttf",
     "fonts/FontAwesome.ttf": "/study_rebag/./fonts/FontAwesome.ttf",
     "fonts/MaterialCommunityIcons.ttf": "/study_rebag/./fonts/MaterialCommunityIcons.ttf",
@@ -15,11 +15,11 @@
     "index.html": "/study_rebag/index.html",
     "manifest.json": "/study_rebag/manifest.json",
     "serve.json": "/study_rebag/serve.json",
-    "static/js/2.06842561.chunk.js.LICENSE.txt": "/study_rebag/static/js/2.06842561.chunk.js.LICENSE.txt"
+    "static/js/2.20d99aef.chunk.js.LICENSE.txt": "/study_rebag/static/js/2.20d99aef.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime~app.958a4c97.js",
-    "static/js/2.06842561.chunk.js",
-    "static/js/app.fa3d8f8b.chunk.js"
+    "static/js/2.20d99aef.chunk.js",
+    "static/js/app.d2681c8f.chunk.js"
   ]
 }
