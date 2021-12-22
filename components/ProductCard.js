@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addFavorite, removeFavorite } from '../reducers/favorites';
 
 export default function ProductCard(props) {
-    const favorites = useSelector(state => state.favorites.value);
+    const favorites = useSelector(state => state.favorites.value.ids);
     const dispatch = useDispatch();
     return (
         <View style={styles.container}>

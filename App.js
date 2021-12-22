@@ -1,15 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import favoritesReducer from './reducers/favorites';
 import SignedIn from './pages/SignedIn/SignedIn';
-
-const store = configureStore({
-  reducer: {
-    favorites: favoritesReducer,
-  },
-});
+import { store } from './stores/store';
 
 export default function App() {
   return (
