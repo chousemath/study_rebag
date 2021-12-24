@@ -7,12 +7,14 @@ import Sell from '../Sell/Sell';
 import Favorites from '../Favorites/Favorites';
 import Vault from '../Vault/Vault';
 
+
 const Tab = createMaterialBottomTabNavigator();
 const iconSize = 26;
 
 export default function SignedIn() {
     return (
         <Tab.Navigator
+            labeled={true}
             barStyle={{
                 backgroundColor: 'white',
                 borderTop: '1px solid gray',
