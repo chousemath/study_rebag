@@ -1,11 +1,20 @@
-import { StyleSheet, View } from 'react-native';
+import * as React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import { useSelector, useDispatch } from 'react-redux';
+import { addFavorite, removeFavorite } from '../../reducers/favorites';
 
 export default function Favorites() {
+  const products = useSelector(state => state.favorites.value.products);
   return (
-    <View style={styles.container}>
-      <Text>Favorites</Text>
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {products.map((product) => {
+          return <ProductCard key={`product-card-${product.id}`} {...product} id={product.id} />
+        })}
+      </View>
+    </ScrollView>
   );
 }
 
@@ -13,7 +22,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
 });
