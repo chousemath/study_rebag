@@ -10,7 +10,7 @@ export default function ProductCard(props) {
     return (
         <View style={styles.container}>
             <Card style={{ width: '100%' }}>
-                <Card.Cover source={{ uri: props.image }} />
+                <Card.Cover source={{ uri: props.profileImage }} />
                 <Card.Content>
                     <Title>{props.brand}</Title>
                     <Paragraph numberOfLines={1}>{props.name}</Paragraph>
