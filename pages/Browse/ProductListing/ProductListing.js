@@ -1,31 +1,62 @@
 import * as React from 'react';
-import { StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
-import { Text } from 'react-native-paper';
+import { ActivityIndicator, StyleSheet, ScrollView, View } from 'react-native';
+import { Button } from 'react-native-paper';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { useGetProductsQuery } from '../../../apis/productsApi';
+import { useGetProductsQuery, useGetConditionsQuery, useGetDesignersQuery } from '../../../apis/apis';
 
-export default function ProductListing() {
+export default function ProductListing({ navigation }) {
   // data, error, isLoading, isFetching, isSuccess
   const limitStepSize = 20;
   const limit = React.useRef(limitStepSize);
   const products = useGetProductsQuery(`?_page=0&_limit=${limit.current}`);
+  const conditions = useGetConditionsQuery();
+  const designers = useGetDesignersQuery();
+  const [conditionsMap, setConditionsMap] = React.useState({});
+  const [designersMap, setDesignersMap] = React.useState({});
   const fetchMoreProducts = () => {
     limit.current += limitStepSize;
     products.refetch(`?_page=0&_limit=${limit.current}`);
   };
+  React.useEffect(() => {
+    if (conditions.isSuccess) {
+      const map = {};
+      for (let condition of conditions.data) {
+        map[condition.id] = condition.name;
+      }
+      setConditionsMap(map);
+    }
+  }, [conditions]);
+  React.useEffect(() => {
+    if (designers.isSuccess) {
+      const map = {};
+      for (let designer of designers.data) {
+        map[designer.id] = designer.name;
+      }
+      setDesignersMap(map);
+    }
+  }, [designers]);
   return (
     <ScrollView>
       <View style={styles.container}>
         {(products.isSuccess || products.data) && products.data.map((product, i) => {
-          return <ProductCard key={`product-card-${product.id}`} {...product} id={i + 1} />
+          return <ProductCard
+            key={`product-card-${product.id}`}
+            onPress={() => navigation.navigate('ProductDetails', product)}
+            condition={conditionsMap[product.conditionId]}
+            designer={designersMap[product.designerId]}
+            {...product}
+            id={i + 1} />
         })}
-        {products.isSuccess && !products.isFetching && !products.isLoading &&
-          <View style={styles.containerFetchMore}>
-            <TouchableOpacity style={styles.btnFetchMore} onPress={fetchMoreProducts}>
-              <Text>Fetch more data</Text>
-            </TouchableOpacity>
-          </View>
-        }
+        <View style={styles.containerFetchMore}>
+          {(products.isFetching || products.isLoading) &&
+            <ActivityIndicator size="large" color="#00ff00" />
+          }
+          {products.isSuccess && !products.isFetching && !products.isLoading &&
+            <Button mode="outlined" onPress={fetchMoreProducts}>
+              Fetch more data
+            </Button>
+          }
+        </View>
       </View>
     </ScrollView>
   );
@@ -43,10 +74,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  btnFetchMore: {
-    padding: 8,
-    margin: 16,
-    backgroundColor: 'gray',
+    paddingTop: 16,
+    paddingBottom: 16,
   },
 });
