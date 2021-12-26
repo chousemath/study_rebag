@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-paper';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import {useGetProductsQuery} from '../../../apis/productsApi';
+import { useGetProductsQuery } from '../../../apis/productsApi';
 
 export default function ProductListing() {
   // data, error, isLoading, isFetching, isSuccess
@@ -16,14 +16,16 @@ export default function ProductListing() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {products.isSuccess && products.data.length && products.data.map((product, i) => {
-          return <ProductCard key={`product-card-${product.id}`} {...product} id={i+1} />
+        {(products.isSuccess || products.data) && products.data.map((product, i) => {
+          return <ProductCard key={`product-card-${product.id}`} {...product} id={i + 1} />
         })}
-        <View style={styles.containerFetchMore}>
-          <TouchableOpacity style={styles.btnFetchMore} onPress={fetchMoreProducts}>
-            <Text>Fetch more data</Text>
-          </TouchableOpacity>
-        </View>
+        {products.isSuccess && !products.isFetching && !products.isLoading &&
+          <View style={styles.containerFetchMore}>
+            <TouchableOpacity style={styles.btnFetchMore} onPress={fetchMoreProducts}>
+              <Text>Fetch more data</Text>
+            </TouchableOpacity>
+          </View>
+        }
       </View>
     </ScrollView>
   );
