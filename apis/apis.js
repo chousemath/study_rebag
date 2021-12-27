@@ -20,6 +20,9 @@ export const api = createApi({
         getDesigners: builder.query({
             query: () => '/designers',
         }),
+        getCategories: builder.query({
+            query: () => '/categories',
+        }),
     }),
 });
 
@@ -29,4 +32,5 @@ export const {
     useGetConditionsQuery,
     useGetConditionQuery,
     useGetDesignersQuery,
+    useGetCategoriesQuery,
 } = api;

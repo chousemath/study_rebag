@@ -1,6 +1,32 @@
 import json
-from random import choice, randint
+from random import choice, randint, shuffle
 
+HALLMARKS_TYPES = [
+    '750',
+    '925',
+    '950',
+    'Designer Signature',
+    'Maker\'s Mark',
+    'Size',
+    'Serial Number',
+]
+ACCESSORIES = [
+    'Protective Case',
+    'Signed Box',
+    'Signed Pouch',
+    'Box',
+    'Dust Bag',
+    'Clochette',
+    'Pochette',
+    'Keys',
+    'Lock',
+    'Detachable Strap',
+]
+WATCH_MOVEMENTS = (
+    "mechanical",
+    "automatic",
+    "quartz",
+)
 test_names_01 = [
     "Chanel Classic Card Holder Grained Calfskin & Silver Black",
     "Chanel Classic Flap Card Holder With Chain Grained Calfskin & Gold Black",
@@ -580,9 +606,65 @@ for _ in range(10):
     for i in range(length):
         retail_price = randint(700_000, 10_000_000)
         sales_price = int(retail_price * randint(10, 90) / 100)
+        category_id = choice(categories)["id"]
+
+        category_specific_features = {}
+
+        if category_id == 1:  # accessory
+            category_specific_features = {}
+        elif category_id == 2:  # bag
+            shuffle(ACCESSORIES)
+            category_specific_features = dict(
+                # bag-specific attributes
+                itemWidth=randint(5, 15),  # in inches
+                itemHeight=randint(5, 15),  # in inches
+                itemDepth=randint(5, 15),  # in inches
+                strapDropLow=randint(18, 22),  # in inches
+                strapDropHigh=randint(23, 25),  # in inches
+                exteriorColor=choice(colors)["id"],
+                interiorColor=choice(colors)["id"],
+                hardwareColor=choice(colors)["id"],
+                exteriorMaterialId=choice(materials)["id"],
+                interiorMaterialId=choice(materials)["id"],
+                accessories=ACCESSORIES[:3] if randint(0, 1) else [],
+            )
+        elif category_id == 3:  # watch
+            category_specific_features = dict(
+                # watch-specific attributes
+                dialColorId=choice(colors)["id"],
+                bandColorId=choice(colors)["id"],
+                bandMaterialId=choice(materials)["id"],
+                caseMaterialId=choice(materials)["id"],
+                watchMovement=choice(WATCH_MOVEMENTS),
+                caseWidth=randint(35, 42),  # in mm
+                watchHeight=randint(8, 12),  # in mm
+                bandWidth=randint(18, 24),  # in mm
+                wristCircumference=randint(6, 8),  # in inches
+            )
+        elif category_id == 4:  # jewelry
+            shuffle(HALLMARKS_TYPES)
+            category_specific_features = dict(
+                metalTypeId=choice(materials)["id"],
+                nonGemMaterialId=choice(materials)["id"],
+                metalFinish=randint(1, 4), # e.g. high polish
+                hallmarkType=HALLMARKS_TYPES[:3] if randint(0, 1) else [],
+                hallmarkLocation=randint(1, 4), # e.g. Interior Surface
+                signature=choice(test_designers),
+                totalItemWeight=randint(20, 45), # in grams
+                itemLengthLow=randint(15, 17), # in inches
+                itemLengthHigh=randint(18, 20), # in inches
+                pendantLength=randint(10, 16), # in mm
+                pendantWidth=randint(10, 16), # in mm
+            )
+
         products.append(
             dict(
                 id=str(base_index + i + 1),
+                hasWaterResitance=choice((True, False)),
+                hasCertificate=choice((True, False)),
+                serialNumber=str(randint(1_000_000_000, 10_000_000_000)),
+                itemNumber=str(randint(1_000_000_000, 10_000_000_000)),
+                brandCode=str(randint(1_000_000_000, 10_000_000_000)),
                 retailPrice=retail_price,
                 salesPrice=sales_price,
                 name=test_names_01[i],
@@ -591,14 +673,13 @@ for _ in range(10):
                     f"https://picsum.photos/seed/{randint(1, 1_000)}/400/400?grayscale"
                     for _ in range(5, 30)
                 ],
-                categoryId=choice(categories)["id"],
+                categoryId=category_id,
                 designerId=choice(designers)["id"],
                 conditionId=choice(conditions)["id"],
                 styleId=choice(styles)["id"],
-                colorId=choice(colors)["id"],
                 storeId=choice(stores)["id"],
-                materialId=choice(materials)["id"],
                 collectionId=choice(collections)["id"],
+                **category_specific_features,
             )
         )
 

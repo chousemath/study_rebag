@@ -2,21 +2,32 @@ import * as React from 'react';
 import { ActivityIndicator, StyleSheet, ScrollView, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { useGetProductsQuery, useGetConditionsQuery, useGetDesignersQuery } from '../../../apis/apis';
+import { useGetCategoriesQuery, useGetProductsQuery, useGetConditionsQuery, useGetDesignersQuery } from '../../../apis/apis';
 
 export default function ProductListing({ navigation }) {
   // data, error, isLoading, isFetching, isSuccess
   const limitStepSize = 20;
   const limit = React.useRef(limitStepSize);
   const products = useGetProductsQuery(`?_page=0&_limit=${limit.current}`);
+  const categories = useGetCategoriesQuery();
   const conditions = useGetConditionsQuery();
   const designers = useGetDesignersQuery();
+  const [categoriesMap, setCategoriesMap] = React.useState({});
   const [conditionsMap, setConditionsMap] = React.useState({});
   const [designersMap, setDesignersMap] = React.useState({});
   const fetchMoreProducts = () => {
     limit.current += limitStepSize;
     products.refetch(`?_page=0&_limit=${limit.current}`);
   };
+  React.useEffect(() => {
+    if (categories.isSuccess) {
+      const map = {};
+      for (let category of categories.data) {
+        map[category.id] = category.name;
+      }
+      setCategoriesMap(map);
+    }
+  }, [categories]);
   React.useEffect(() => {
     if (conditions.isSuccess) {
       const map = {};
@@ -41,7 +52,13 @@ export default function ProductListing({ navigation }) {
         {(products.isSuccess || products.data) && products.data.map((product, i) => {
           return <ProductCard
             key={`product-card-${product.id}`}
-            onPress={() => navigation.navigate('ProductDetails', product)}
+            onPress={() => navigation.navigate('ProductDetails', {
+              ...product,
+              condition: conditionsMap[product.conditionId],
+              designer: designersMap[product.designerId],
+              category: categoriesMap[product.categoryId],
+            })}
+            category={categoriesMap[product.categoryId]}
             condition={conditionsMap[product.conditionId]}
             designer={designersMap[product.designerId]}
             {...product}

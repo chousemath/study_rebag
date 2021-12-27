@@ -16,9 +16,10 @@ export default function ProductCard(props) {
                 <Card.Content>
                     {props.designer && <Title numberOfLines={1}>{props.designer}</Title>}
                     <Paragraph numberOfLines={1}>{props.name}</Paragraph>
-                    {props.condition && <Caption>{props.condition}</Caption>}
-                    <Paragraph>₩{props.salesPrice}</Paragraph>
-                    <Paragraph>즉시 구매가</Paragraph>
+                    {props.category && <Caption numberOfLines={1}>Category: {props.category}</Caption>}
+                    {props.condition && <Caption numberOfLines={1}>Condition: {props.condition}</Caption>}
+                    <Paragraph numberOfLines={1}>₩{props.salesPrice}</Paragraph>
+                    <Paragraph numberOfLines={1}>즉시 구매가</Paragraph>
                 </Card.Content>
                 <Card.Actions>
                     <Button
